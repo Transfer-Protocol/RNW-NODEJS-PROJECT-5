@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="adminHMD professional admin dashboard template">
+  <title>Add User | adminHMD</title>
+
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+  <div class="admin-shell">
+    <div class="sidebar-backdrop" data-sidebar-close></div>
+
+    <%- include('components/sidebar') %>
+
+      <div class="admin-main">
+        <%- include('components/header') %>
+
+          <main class="dashboard-content">
+            <div class="container-fluid px-3 px-lg-4 py-4">
+              <div class="page-heading">
+                <div class="page-heading-copy">
+                  <span class="page-icon"><i class="bi bi-person-plus" aria-hidden="true"></i></span>
+                  <div>
+                    <p class="eyebrow mb-1">Management</p>
+                    <h1 class="h3 mb-1">Edit User</h1>
+                    <p class="text-muted mb-0">Edit an existing user account with role and team assignments.</p>
+                  </div>
+                </div>
+                <div class="heading-actions"><a class="btn btn-outline-secondary btn-sm" href="/users"><i
+                      class="bi bi-arrow-left" aria-hidden="true"></i> Back to Users</a></div>
+              </div>
+
+              <section class="row g-3">
+                <div class="col-12 col-xl-8">
+                  <form action="/edit-user/<%=user._id%>" enctype="multipart/form-data" method="post" class="panel needs-validation" novalidate>
+                    <div class="panel-header">
+                      <div>
+                        <h2 class="h5 mb-1 section-title"><i class="bi bi-person-plus" aria-hidden="true"></i><span>User
+                            Information</span></h2>
+                        <p class="text-muted mb-0">Edit an existing user account with validated fields.</p>
+                      </div>
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label" for="firstName">First name</label>
+                        <input class="form-control" id="firstName" name="firstName" type="text" value="<%=user.firstName%>" required>
+                        <div class="invalid-feedback">First name is required.</div>
+                      </div>
+                      <div class="col-md-6"><label class="form-label" for="lastName">Last name</label>
+                        <input class="form-control" id="lastName" name="lastName" type="text" value="<%=user.lastName%>" required>
+                        <div class="invalid-feedback">Last name is required.</div>
+                      </div>
+                      <div class="col-md-6"><label class="form-label" for="email">Email</label>
+                        <input class="form-control" id="email" name="email" type="email" value="<%=user.email%>" required>
+                        <div class="invalid-feedback">Enter a valid email.</div>
+                      </div>
+                      <div class="col-md-6"><label class="form-label" for="role">Role</label>
+                        <input type="text" class="form-control" id="role" name="role" value="<%=user.role%>" required>
+                        <div class="invalid-feedback">Enter role name.</div>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="team">Team</label>
+                        <input type="text" class="form-control" id="team" name="team" value="<%=user.team%>" required>
+                        <div class="invalid-feedback">Enter team name.</div>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label" for="notes">Avatar Image</label>
+                        <input type="file" class="form-control" name="userPhoto">
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                      <div>
+                        <span>Current Avatar Image:</span>
+                        <img src="/profile/photourl/<%=user.photoURL%>" width="32" height="32">
+                      </div>
+                      <div>
+                          <select class="form-select" name="status">
+                            <option <% if (user.status === 'Active') {%> selected <%}%>>Active</option>
+                            <option <% if (user.status === 'Pending') {%> selected <%}%>>Pending</option>
+                            <option <% if (user.status === 'Suspended') {%> selected <%}%>>Suspended</option>
+                          </select>
+                      </div>
+                      <div class="d-flex flex-wrap justify-content-end gap-2">
+                        <a class="btn btn-outline-secondary" href="/users">Cancel</a>
+                        <button class="btn btn-primary" type="submit">
+                          <i class="bi bi-person-check" aria-hidden="true"></i>Confirm Edit User
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-12 col-xl-4">
+                  <div class="panel h-100">
+                    <h2 class="h5 mb-3 section-title"><i class="bi bi-list-check" aria-hidden="true"></i><span>Access
+                        Checklist</span></h2>
+                    <div class="activity-list">
+                      <div class="activity-item"><span class="activity-dot bg-success"></span>
+                        <div>
+                          <p class="mb-1 fw-semibold">Assign role</p>
+                          <p class="text-muted small mb-0">Start with the least privileged role.</p>
+                        </div>
+                      </div>
+                      <div class="activity-item"><span class="activity-dot bg-primary"></span>
+                        <div>
+                          <p class="mb-1 fw-semibold">Add team</p>
+                          <p class="text-muted small mb-0">Team ownership controls dashboards.</p>
+                        </div>
+                      </div>
+                      <div class="activity-item"><span class="activity-dot bg-warning"></span>
+                        <div>
+                          <p class="mb-1 fw-semibold">Send invite</p>
+                          <p class="text-muted small mb-0">Users receive activation by email.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </main>
+
+          <%- include('components/footer') %>
+      </div>
+  </div>
+
+  <script src="/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

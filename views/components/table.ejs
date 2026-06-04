@@ -1,0 +1,57 @@
+<div class="table-responsive">
+    <% if (users.length) { %>
+        <table class="table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">User</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Joined</th>
+                    <th scope="col" class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(e => { %>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <img class="avatar-img avatar-sm" src="/profile/photourl/<%=e.photoURL%>" alt="avatar image">
+                                <div>
+                                  <p class="fw-semibold mb-0"><%= e.firstName %> <%= e.lastName %></p>
+                                  <p class="text-muted small mb-0"><%= e.email %></p>
+                                </div>
+                              </div>
+                        </td>
+                        <td>
+                            <%=e.role%>
+                        </td>
+                        <td>
+                            <%=e.team%>
+                        </td>
+                        <td>
+                            <% if (e.status === 'Active') {%>
+                                <span class="badge text-bg-success">Active</span>
+                            <%} else if (e.status === 'Pending') {%>
+                                <span class="badge text-bg-warning">Pending</span>
+                            <%} else {%>
+                                <span class="badge text-bg-secondary">Suspended</span>
+                            <%}%>
+                        </td>
+                        <td>
+                            <%= new Date(e.joinedDate).toLocaleDateString('en-IN', {year: 'numeric', month: 'long', day: 'numeric'}) %>
+                        </td>
+                        <td>
+                            <a href="/edituser/<%=e._id%>" class="btn btn-warning">Edit</a>
+                            <a href="/delete-user/<%=e._id%>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <%})%>
+            </tbody>
+        </table>
+    <%} else {%>
+        <div style="text-align: center;">
+            <p>No user has registered</p>
+        </div>
+    <%}%>
+</div>
